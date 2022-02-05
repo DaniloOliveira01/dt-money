@@ -1,5 +1,6 @@
 import ReactModal from 'react-modal';
 import { useState } from 'react';
+import { TransactionProvider, TransactionsContext } from './TransactionContext'
 
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
@@ -21,7 +22,7 @@ ReactModal.setAppElement('#root');
     setIsNewTransactionModalOpen(false);
   }
   return (
-    <>
+    <TransactionProvider>
       <Header
       onOpenNewTransactionModal={handleOpenNewTransactionModal}
       />
@@ -34,7 +35,7 @@ ReactModal.setAppElement('#root');
       />
 
       <GlobalStyle />
-    </>
+    </TransactionProvider>
   );
 }
 

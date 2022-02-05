@@ -3,7 +3,9 @@ import { Container, TransactionTypeContainer, RadioBox } from "./style";
 import closeImg from '../../assets/close.svg'
 import inconeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
-import { useState } from "react";
+import { FormEvent, useState, useContext } from "react";
+import { api } from "../../services/api";
+import { TransactionsContext } from "../../TransactionContext";
 
 interface NewTransactionModalPops {
   isOpen: boolean;
@@ -11,9 +13,28 @@ interface NewTransactionModalPops {
 }
 
 
-
 export function NewTransactionModal({ isOpen, onRequestClose}: NewTransactionModalPops) {
+  const { createTransaction } = useContext(TransactionsContext);
+
+  const [title, setTitle] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [category, setCategory] = useState('');
   const [type, setType] = useState('deposit');
+
+
+
+  function handleCreateNewTransaction(event: FormEvent) {
+    event.preventDefault(); 
+
+    createTransaction({
+      title,
+      amount,
+      category,
+      type
+    })
+
+  }
+
 
   return (
     <ReactModal
@@ -29,14 +50,19 @@ export function NewTransactionModal({ isOpen, onRequestClose}: NewTransactionMod
       >
         <img src={closeImg} alt="Fechar Modal" />
       </button>
-      <Container>
+
+      <Container onSubmit={handleCreateNewTransaction}>
         <h2>Cadastrar Transação</h2>
         <input 
           placeholder="Título"
+          value={title}
+          onChange={event => setTitle(event.target.value)}
         />
 
         <input type="number"
           placeholder="Valor"
+          value={amount}
+          onChange={event => setAmount(Number(event.target.value))}
         />
 
         <TransactionTypeContainer>
@@ -63,6 +89,8 @@ export function NewTransactionModal({ isOpen, onRequestClose}: NewTransactionMod
 
         <input
           placeholder="Categoria"
+          value={category}
+          onChange={event => setCategory(event.target.value)}
         />
 
         <button type="submit">
