@@ -21,13 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-favicon.ico
-logo192.png
-logo512.png
-App.css
-App.test.tsx
-index.css
-logo.svg
-reportWebVitals.ts
-setupTests.ts
